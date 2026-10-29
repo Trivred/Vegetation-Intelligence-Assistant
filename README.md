@@ -10,6 +10,7 @@ A web-based assistant for exploring vegetation data in Saudi Arabia, including r
 * Django
 * Django REST Framework
 * Model Context Protocol (MCP)
+* Pandas
 * HTML, CSS, JavaScript
 * Excel
 
@@ -55,6 +56,12 @@ python -m venv .venv
 pip install -r requirements.txt
 ```
 
+If Pandas is not included in `requirements.txt`, install it using:
+
+```bash
+pip install pandas openpyxl
+```
+
 ### 4. Apply Migrations
 
 ```bash
@@ -69,7 +76,7 @@ python manage.py runserver
 
 Open the application at:
 
-`http://127.0.0.1:8000/api/`
+http://127.0.0.1:8000/api/
 
 ## API Endpoints
 
@@ -89,11 +96,12 @@ Open the application at:
 
 ## Data Source
 
-Vegetation data stored in Excel files.
+Vegetation data stored in Excel files and processed using Pandas.
 
 ## Project Information
 
 * **Name:** Vegetation Intelligence Assistant
 * **Domain:** Vegetation Data Analysis and Biodiversity
 * **Framework:** Django REST Framework
+* **Data Processing:** Pandas
 * **Interface Language:** Arabic
