@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#f7faf6">
+    <title>مساعد الغطاء النباتي | المملكة العربية السعودية</title>
+
+    <style>
+        :root {
+            --green-900: #173f2d;
+            --green-800: #20563b;
+            --green-700: #2f7049;
+            --green-100: #e8f1e9;
+            --green-50: #f5f9f4;
+            --text: #26372d;
+            --muted: #78857b;
+            --border: #e4ebe3;
+            --white: #ffffff;
+            --danger: #a53b36;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+            color: var(--text);
+            background: #f7f9f6;
+            min-height: 100vh;
+        }
+
+        button, select, input {
+            font: inherit;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        button:focus-visible,
+        select:focus-visible,
+        input:focus-visible {
+            outline: 2px solid var(--green-700);
+            outline-offset: 3px;
+        }
+
+        .topbar {
+            min-height: 76px;
+            padding: 12px 6%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            background: var(--white);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 0;
+        }
+
+        .brand-icon {
+            display: grid;
+            place-items: center;
+            width: 43px;
+            height: 43px;
+            flex-shrink: 0;
+            border-radius: 14px;
+            background: var(--green-100);
+            font-size: 23px;
+        }
+
+        .brand-name {
+            margin: 0;
+            font-size: 17px;
+            font-weight: 750;
+            color: var(--green-900);
+        }
+
+        .brand-subtitle {
+            margin: 4px 0 0;
+            font-size: 12px;
+            color: var(--muted);
+        }
+
+        .status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--green-800);
+            background: var(--green-50);
+            border: 1px solid var(--border);
+            border-radius: 30px;
+            padding: 9px 13px;
+            font-size: 12px;
+            white-space: nowrap;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: #4c9b66;
+            border-radius: 50%;
+        }
+
+        main {
+            width: min(100% - 32px, 960px);
+            margin: 0 auto;
+            padding: 45px 0 30px;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .hero-icon {
+            width: 66px;
+            height: 66px;
+            display: grid;
+            place-items: center;
+            margin: 0 auto 17px;
+            background: #e8f1e7;
+            border-radius: 22px;
+            font-size: 34px;
+        }
+
+        .eyebrow {
+            color: var(--green-700);
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: .4px;
+        }
+
+        h1 {
+            color: var(--green-900);
+            font-size: clamp(26px, 4vw, 36px);
+            margin: 12px 0;
+            line-height: 1.5;
+        }
+
+        .hero p {
+            max-width: 590px;
+            margin: 0 auto;
+            color: var(--muted);
+            line-height: 1.9;
+            font-size: 14px;
+        }
+
+        .section-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--green-900);
+            margin: 0 0 12px;
+        }
+
+        .question-section {
+            margin-bottom: 22px;
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+        }
+
+        .category {
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            background: var(--white);
+            padding: 16px;
+            text-align: right;
+            transition: border-color .2s, background .2s;
+        }
+
+        .category:hover {
+            border-color: #9bbba0;
+            background: #fbfdfb;
+        }
+
+        .category.active {
+            border-color: var(--green-700);
+            background: var(--green-50);
+        }
+
+        .category:disabled {
+            opacity: .6;
+            cursor: wait;
+        }
+
+        .category strong {
+            display: block;
+            color: var(--green-900);
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .category span {
+            display: block;
+            color: var(--muted);
+            font-size: 12px;
+            line-height: 1.7;
+        }
+
+        .question-panel {
+            margin-top: 18px;
+            padding: 20px;
+            border: 1px solid var(--border);
+            background: var(--white);
+            border-radius: 17px;
+        }
+
+        .field {
+            margin-bottom: 16px;
+        }
+
+        .field:last-child {
+            margin-bottom: 0;
+        }
+
+        .field label {
+            display: block;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--green-900);
+            margin-bottom: 8px;
+        }
+
+        .field select,
+        .field input {
+            width: 100%;
+            min-height: 46px;
+            padding: 10px 12px;
+            border: 1px solid #dce6db;
+            border-radius: 11px;
+            background: #fff;
+            color: var(--text);
+            font-size: 14px;
+        }
+
+        .field select:focus,
+        .field input:focus {
+            border-color: #80a889;
+        }
+
+        .field-help {
+            margin: 7px 0 0;
+            color: var(--muted);
+            font-size: 11px;
+            line-height: 1.8;
+        }
+
+        .actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 18px;
+        }
+
+        .primary-button,
+        .secondary-button {
+            min-height: 44px;
+            border-radius: 11px;
+            padding: 10px 18px;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .primary-button {
+            border: 1px solid var(--green-800);
+            background: var(--green-800);
+            color: white;
+        }
+
+        .primary-button:hover {
+            background: var(--green-900);
+        }
+
+        .secondary-button {
+            border: 1px solid var(--border);
+            background: white;
+            color: var(--text);
+        }
+
+        .primary-button:disabled,
+        .secondary-button:disabled {
+            opacity: .55;
+            cursor: wait;
+        }
+
+        .chat-panel {
+            margin-top: 24px;
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 8px 30px rgba(30, 65, 40, .035);
+        }
+
+        .chat-header {
+            padding: 17px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .chat-header h2 {
+            font-size: 14px;
+            margin: 0;
+            color: var(--green-900);
+        }
+
+        .clear-button {
+            border: 0;
+            background: transparent;
+            color: var(--muted);
+            font-size: 12px;
+            padding: 8px;
+        }
+
+        .clear-button:hover {
+            color: var(--danger);
+        }
+
+        .messages {
+            padding: 22px;
+            min-height: 200px;
+            max-height: 520px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .welcome-message {
+            padding: 17px;
+            background: var(--green-50);
+            border: 1px solid var(--border);
+            border-radius: 14px 14px 14px 4px;
+            max-width: 90%;
+            line-height: 1.9;
+            font-size: 13px;
+        }
+
+        .message {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+            max-width: 95%;
+            min-width: 0;
+        }
+
+        .message.user {
+            align-self: flex-start;
+        }
+
+        .message.assistant {
+            align-self: flex-end;
+            width: 100%;
+        }
+
+        .message-label {
+            color: var(--muted);
+            font-size: 11px;
+            padding: 0 4px;
+        }
+
+        .message-content {
+            padding: 13px 16px;
+            border-radius: 15px;
+            line-height: 1.9;
+            font-size: 13px;
+            overflow-wrap: anywhere;
+            white-space: pre-wrap;
+            unicode-bidi: plaintext;
+        }
+
+        .message.user .message-content {
+            background: var(--green-800);
+            color: white;
+            border-bottom-left-radius: 4px;
+        }
+
+        .message.assistant .message-content {
+            background: var(--green-50);
+            border: 1px solid var(--border);
+            border-bottom-right-radius: 4px;
+        }
+
+        .error {
+            color: var(--danger);
+            background: #fff6f5 !important;
+            border-color: #f0d6d3 !important;
+        }
+
+        .typing {
+            color: var(--muted);
+            font-size: 12px;
+            padding: 5px 0;
+        }
+
+        .results-wrap {
+            width: 100%;
+            margin-top: 14px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            background: white;
+        }
+
+        .results-heading {
+            padding: 12px 14px;
+            color: var(--green-900);
+            background: var(--green-100);
+            font-weight: 700;
+            font-size: 12px;
+        }
+
+        .table-scroll {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        .results-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+            text-align: right;
+        }
+
+        .results-table th,
+        .results-table td {
+            padding: 11px 12px;
+            border-bottom: 1px solid var(--border);
+            vertical-align: top;
+            min-width: 100px;
+            line-height: 1.7;
+        }
+
+        .results-table th {
+            background: #fafcf9;
+            color: var(--green-900);
+            font-weight: 700;
+        }
+
+        .results-table tr:last-child td {
+            border-bottom: 0;
+        }
+
+        .result-count {
+            padding: 10px 14px;
+            border-top: 1px solid var(--border);
+            font-size: 11px;
+            color: var(--muted);
+        }
+
+        footer {
+            padding: 20px 12px 0;
+            text-align: center;
+            color: var(--muted);
+            font-size: 11px;
+            line-height: 1.8;
+        }
+
+        [hidden] {
+            display: none !important;
+        }
+
+        @media (max-width: 560px) {
+            .topbar {
+                min-height: 70px;
+                padding: 13px 16px;
+            }
+
+            .brand-name {
+                font-size: 14px;
+            }
+
+            .brand-subtitle {
+                font-size: 10px;
+            }
+
+            .status {
+                padding: 8px;
+                font-size: 10px;
+            }
+
+            main {
+                width: calc(100% - 24px);
+                padding-top: 30px;
+            }
+
+            .category-grid {
+                grid-template-columns: 1fr;
+                gap: 9px;
+            }
+
+            .category {
+                padding: 14px;
+            }
+
+            .question-panel {
+                padding: 15px;
+            }
+
+            .messages {
+                padding: 15px;
+                max-height: 450px;
+            }
+
+            .message {
+                max-width: 100%;
+            }
+
+            .chat-header {
+                padding: 14px;
+            }
+
+            .results-table th,
+            .results-table td {
+                padding: 9px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+<header class="topbar">
+    <div class="brand">
+        <div>
+            <p class="brand-name">مساعد الغطاء النباتي</p>
+            <p class="brand-subtitle">المملكة العربية السعودية</p>
+        </div>
+    </div>
+
+    <div class="status">
+        <span class="status-dot"></span>
+        <span>مساعد بحثي</span>
+    </div>
+</header>
+
+<main>
+    <section class="hero">
+        <div class="hero-icon" aria-hidden="true">🌱</div>
+        <span class="eyebrow">VEGETATION INTELLIGENCE ASSISTANT</span>
+        <h1>اكتشفي معلومات الغطاء النباتي</h1>
+        <p>
+            اختاري نوع المعلومات التي تبحثين عنها، ثم حددي السؤال المناسب.
+            يعرض المساعد النتائج المسجلة في ملفات بيانات المشروع.
+        </p>
+    </section>
+
+    <section class="question-section">
+        <h2 class="section-title">١. اختاري التصنيف</h2>
+
+        <div class="category-grid" aria-label="تصنيفات الأسئلة">
+            <button class="category active" type="button" data-category="rare">
+                <strong>🌸 النباتات النادرة</strong>
+                <span>استعراض النباتات المسجلة ومستويات ندرتها ومناطقها.</span>
+            </button>
+
+            <button class="category" type="button" data-category="toxic">
+                <strong>⚠️ النباتات السامة</strong>
+                <span>البحث في سجلات النباتات المصنفة ضمن بيانات السمية.</span>
+            </button>
+
+            <button class="category" type="button" data-category="benefits">
+                <strong>🍃 النباتات النافعة</strong>
+                <span>استعراض النباتات النافعة والمعلومات المتعلقة بفوائدها.</span>
+            </button>
+
+            <button class="category" type="button" data-category="distribution">
+                <strong>🗺️ توزيع النباتات</strong>
+                <span>البحث عن نبات محدد أو سجلات التوزيع حسب المنطقة.</span>
+            </button>
+        </div>
+
+        <div class="question-panel">
+            <div class="field">
+                <label for="questionSelect">٢. اختاري السؤال</label>
+                <select id="questionSelect">
+                    <option value="rare_all">ما النباتات النادرة المسجلة في البيانات؟</option>
+                    <option value="rare_region">ما النباتات النادرة المسجلة في منطقة معينة؟</option>
+                    <option value="rare_level">ما مستويات الندرة المسجلة؟</option>
+                </select>
+            </div>
+
+            <div class="field" id="regionField" hidden>
+                <label for="regionSelect">المنطقة</label>
+                <select id="regionSelect">
+                    <option value="">اختاري المنطقة</option>
+                    <option value="الرياض">الرياض</option>
+                    <option value="مكة المكرمة">مكة المكرمة</option>
+                    <option value="المدينة المنورة">المدينة المنورة</option>
+                    <option value="القصيم">القصيم</option>
+                    <option value="المنطقة الشرقية">المنطقة الشرقية</option>
+                    <option value="عسير">عسير</option>
+                    <option value="تبوك">تبوك</option>
+                    <option value="حائل">حائل</option>
+                    <option value="الحدود الشمالية">الحدود الشمالية</option>
+                    <option value="جازان">جازان</option>
+                    <option value="نجران">نجران</option>
+                    <option value="الباحة">الباحة</option>
+                    <option value="الجوف">الجوف</option>
+                </select>
+                <p class="field-help">
+                    ستُستخدم المنطقة للبحث في السجلات الموجودة في ملف البيانات.
+                </p>
+            </div>
+
+            <div class="field" id="plantField" hidden>
+                <label for="plantInput">اسم النبات</label>
+                <input
+                    id="plantInput"
+                    type="text"
+                    maxlength="150"
+                    placeholder="مثال: Adenia venenata"
+                    autocomplete="off"
+                >
+                <p class="field-help">
+                    يمكنك كتابة الاسم العلمي أو الاسم المتوفر لديكِ في ملف البيانات.
+                </p>
+            </div>
+
+            <div class="actions">
+                <button class="primary-button" id="askButton" type="button">
+                    عرض النتائج
+                </button>
+                <button class="secondary-button" id="resetButton" type="button">
+                    إعادة الاختيار
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <section class="chat-panel" aria-label="نتائج المساعد">
+        <div class="chat-header">
+            <h2>💬 النتائج</h2>
+            <button class="clear-button" id="clearButton" type="button">
+                مسح النتائج
+            </button>
+        </div>
+
+        <div class="messages" id="messages" aria-live="polite">
+            <div class="welcome-message">
+                أهلًا بكِ! 🌿<br>
+                اختاري تصنيفًا وسؤالًا من الأعلى، ثم اضغطي «عرض النتائج».
+                ستظهر هنا السجلات التي يعثر عليها النظام في ملفات Excel.
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        مساعد بحثي للغطاء النباتي في المملكة العربية السعودية
+        <br>
+    </footer>
+</main>
+
+<script>
+(function () {
+    const questionSelect = document.getElementById("questionSelect");
+    const regionField = document.getElementById("regionField");
+    const regionSelect = document.getElementById("regionSelect");
+    const plantField = document.getElementById("plantField");
+    const plantInput = document.getElementById("plantInput");
+    const askButton = document.getElementById("askButton");
+    const resetButton = document.getElementById("resetButton");
+    const clearButton = document.getElementById("clearButton");
+    const messages = document.getElementById("messages");
+    const categories = document.querySelectorAll(".category");
+
+    let busy = false;
+    let currentCategory = "rare";
+
+    const questions = {
+        rare: [
+            {
+                value: "rare_all",
+                label: "ما النباتات النادرة المسجلة في البيانات؟"
+            },
+            {
+                value: "rare_region",
+                label: "ما النباتات النادرة المسجلة في منطقة معينة؟"
+            },
+            {
+                value: "rare_level",
+                label: "ما مستويات الندرة المسجلة؟"
+            }
+        ],
+        toxic: [
+            {
+                value: "toxic_all",
+                label: "ما النباتات السامة المسجلة في البيانات؟"
+            },
+            {
+                value: "toxic_region",
+                label: "ما النباتات السامة المسجلة في منطقة معينة؟"
+            }
+        ],
+        benefits: [
+            {
+                value: "benefits_all",
+                label: "ما النباتات النافعة المسجلة في البيانات؟"
+            },
+            {
+                value: "benefits_uses",
+                label: "ما المعلومات المتاحة عن فوائد النباتات؟"
+            }
+        ],
+        distribution: [
+            {
+                value: "dist_region",
+                label: "ما سجلات توزيع النباتات في منطقة معينة؟"
+            },
+            {
+                value: "dist_plant",
+                label: "أين ينتشر نبات محدد حسب البيانات؟"
+            }
+        ]
+    };
+
+    function addTextMessage(type, text, isError = false) {
+        const wrapper = document.createElement("div");
+        wrapper.className = "message " + type;
+
+        const label = document.createElement("div");
+        label.className = "message-label";
+        label.textContent = type === "user"
+            ? "اختيارك"
+            : "مساعد الغطاء النباتي";
+
+        const content = document.createElement("div");
+        content.className = "message-content";
+
+        if (isError) {
+            content.classList.add("error");
+        }
+
+        content.textContent = String(text ?? "");
+
+        wrapper.append(label, content);
+        messages.appendChild(wrapper);
+
+        messages.scrollTop = messages.scrollHeight;
+
+        return wrapper;
+    }
+
+    function addResultsTable(parent, data) {
+        const rows = Array.isArray(data.results) ? data.results : [];
+        const columns = Array.isArray(data.columns) ? data.columns : [];
+
+        if (!rows.length) {
+            return;
+        }
+
+        const visibleColumns = columns.length
+            ? columns
+            : Object.keys(rows[0] || {});
+
+        if (!visibleColumns.length) {
+            return;
+        }
+
+        const wrap = document.createElement("div");
+        wrap.className = "results-wrap";
+
+        const heading = document.createElement("div");
+        heading.className = "results-heading";
+        heading.textContent = "السجلات المطابقة";
+        wrap.appendChild(heading);
+
+        const scroll = document.createElement("div");
+        scroll.className = "table-scroll";
+
+        const table = document.createElement("table");
+        table.className = "results-table";
+
+        const thead = document.createElement("thead");
+        const headerRow = document.createElement("tr");
+
+        visibleColumns.forEach(column => {
+            const th = document.createElement("th");
+            th.textContent = column;
+            headerRow.appendChild(th);
+        });
+
+        thead.appendChild(headerRow);
+        table.appendChild(thead);
+
+        const tbody = document.createElement("tbody");
+
+        rows.forEach(row => {
+            const tr = document.createElement("tr");
+
+            visibleColumns.forEach(column => {
+                const td = document.createElement("td");
+                const value = row[column];
+
+                td.textContent = value === null || value === undefined || value === ""
+                    ? "—"
+                    : String(value);
+
+                tr.appendChild(td);
+            });
+
+            tbody.appendChild(tr);
+        });
+
+        table.appendChild(tbody);
+        scroll.appendChild(table);
+        wrap.appendChild(scroll);
+
+        const count = document.createElement("div");
+        count.className = "result-count";
+        count.textContent =
+            "عدد السجلات المعروضة: " + rows.length +
+            (Number.isFinite(data.total_results)
+                ? " من إجمالي " + data.total_results + " سجل."
+                : " سجل.");
+
+        wrap.appendChild(count);
+        parent.appendChild(wrap);
+    }
+
+    function updateQuestionOptions(category, selectedValue) {
+        currentCategory = category;
+
+        questionSelect.replaceChildren();
+
+        questions[category].forEach(question => {
+            const option = document.createElement("option");
+            option.value = question.value;
+            option.textContent = question.label;
+            questionSelect.appendChild(option);
+        });
+
+        if (selectedValue && questions[category].some(q => q.value === selectedValue)) {
+            questionSelect.value = selectedValue;
+        }
+
+        updateFields();
+    }
+
+    function updateFields() {
+        const questionId = questionSelect.value;
+
+        const needsRegion = [
+            "rare_region",
+            "toxic_region",
+            "dist_region"
+        ].includes(questionId);
+
+        const needsPlant = questionId === "dist_plant";
+
+        regionField.hidden = !needsRegion;
+        plantField.hidden = !needsPlant;
+
+        if (!needsRegion) {
+            regionSelect.value = "";
+        }
+
+        if (!needsPlant) {
+            plantInput.value = "";
+        }
+    }
+
+    function setBusy(value) {
+        busy = value;
+        askButton.disabled = value;
+        resetButton.disabled = value;
+        clearButton.disabled = value;
+        questionSelect.disabled = value;
+        regionSelect.disabled = value;
+        plantInput.disabled = value;
+
+        categories.forEach(button => {
+            button.disabled = value;
+        });
+
+        askButton.textContent = value ? "جارٍ البحث..." : "عرض النتائج";
+    }
+
+    async function submitQuestion() {
+        if (busy) {
+            return;
+        }
+
+        const questionId = questionSelect.value;
+        const selectedQuestion = questions[currentCategory].find(
+            question => question.value === questionId
+        );
+
+        if (!selectedQuestion) {
+            addTextMessage("assistant", "اختاري سؤالًا من القائمة.", true);
+            return;
+        }
+
+        const region = regionSelect.value.trim();
+        const plant = plantInput.value.trim();
+
+        if (
+            ["rare_region", "toxic_region", "dist_region"].includes(questionId)
+            && !region
+        ) {
+            addTextMessage("assistant", "اختاري المنطقة أولًا.", true);
+            regionSelect.focus();
+            return;
+        }
+
+        if (questionId === "dist_plant" && !plant) {
+            addTextMessage("assistant", "أدخلي اسم النبات أولًا.", true);
+            plantInput.focus();
+            return;
+        }
+
+        let displayText = selectedQuestion.label;
+
+        if (region) {
+            displayText += "\nالمنطقة: " + region;
+        }
+
+        if (plant) {
+            displayText += "\nالنبات: " + plant;
+        }
+
+        setBusy(true);
+        addTextMessage("user", displayText);
+
+        const typing = document.createElement("div");
+        typing.className = "typing";
+        typing.setAttribute("role", "status");
+        typing.textContent = "🌿 جارٍ البحث في ملفات البيانات...";
+        messages.appendChild(typing);
+        messages.scrollTop = messages.scrollHeight;
+
+        try {
+            const response = await fetch("/api/chat/", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                },
+                body: JSON.stringify({
+                    question_id: questionId,
+                    region: region,
+                    query: plant
+                })
+            });
+
+            const raw = await response.text();
+            let data;
+
+            try {
+                data = JSON.parse(raw);
+            } catch {
+                throw new Error(
+                    "استجابة الخادم غير مفهومة. تأكدي من تشغيل Django."
+                );
+            }
+
+            if (!response.ok) {
+                throw new Error(
+                    data.error ||
+                    data.detail ||
+                    "تعذر تنفيذ الطلب. رمز الاستجابة: " + response.status
+                );
+            }
+
+            if (data.success === false) {
+                throw new Error(data.error || "تعذر إكمال البحث.");
+            }
+
+            const resultMessage = document.createElement("div");
+            resultMessage.className = "message assistant";
+
+            const label = document.createElement("div");
+            label.className = "message-label";
+            label.textContent = "مساعد الغطاء النباتي";
+
+            const content = document.createElement("div");
+            content.className = "message-content";
+            content.textContent = data.answer || "اكتمل البحث.";
+
+            resultMessage.append(label, content);
+            messages.appendChild(resultMessage);
+
+            addResultsTable(resultMessage, data);
+
+            messages.scrollTop = messages.scrollHeight;
+
+        } catch (error) {
+            addTextMessage(
+                "assistant",
+                error.message || "حدث خطأ أثناء البحث.",
+                true
+            );
+        } finally {
+            typing.remove();
+            setBusy(false);
+        }
+    }
+
+    categories.forEach(button => {
+        button.addEventListener("click", function () {
+            if (busy) {
+                return;
+            }
+
+            categories.forEach(item => item.classList.remove("active"));
+            button.classList.add("active");
+
+            updateQuestionOptions(button.dataset.category);
+        });
+    });
+
+    questionSelect.addEventListener("change", updateFields);
+
+    askButton.addEventListener("click", submitQuestion);
+
+    resetButton.addEventListener("click", function () {
+        if (busy) {
+            return;
+        }
+
+        categories.forEach(button => {
+            button.classList.toggle(
+                "active",
+                button.dataset.category === "rare"
+            );
+        });
+
+        regionSelect.value = "";
+        plantInput.value = "";
+
+        updateQuestionOptions("rare", "rare_all");
+    });
+
+    clearButton.addEventListener("click", function () {
+        if (busy) {
+            return;
+        }
+
+        messages.replaceChildren();
+
+        addTextMessage(
+            "assistant",
+            "تم مسح النتائج. اختاري سؤالًا جديدًا لبدء البحث."
+        );
+    });
+
+    updateQuestionOptions("rare", "rare_all");
+})();
+</script>
+</body>
+</html>
